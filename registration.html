@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YALA Event Registration</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Add logo container before the form -->
+        <div class="logo-container">
+            <img src="yallalogo.png" alt="YALA Logo" class="logo">
+        </div>
+
+        <!-- 3D Decorative Elements -->
+        <div class="decoration">
+            <div class="airplane"></div>
+            <div class="airplane"></div>
+            <div class="airplane"></div>
+            <div class="airplane"></div>
+            <div class="airplane"></div>
+            <div class="airplane"></div>
+            <div class="airplane"></div>
+            <div class="airplane"></div>
+            
+            <!-- Adding 100 airplane divs -->
+            <div class="airplane"></div>
+            <!-- Repeat this div 99 more times -->
+            <!-- You can copy-paste it or use JavaScript to generate them dynamically -->
+        </div>
+
+        <!-- Registration Form -->
+        <form id="registrationForm" onsubmit="handleSubmit(event)">
+            <h1>YALA Event Registration</h1>
+            <h2>Break The Barriers / We Face</h2>
+            
+            <div class="input-group">
+                <input type="text" id="firstName" required>
+                <label for="firstName">First Name</label>
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="lastName" required>
+                <label for="lastName">Last Name</label>
+            </div>
+
+            <div class="input-group">
+                <input type="email" id="email" required>
+                <label for="email">Email</label>
+            </div>
+
+            <div class="input-group">
+                <input type="tel" id="phone" required>
+                <label for="phone">Phone Number</label>
+            </div>
+
+            <button type="submit">Register Now</button>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
