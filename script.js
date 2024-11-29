@@ -8,14 +8,20 @@ function handleSubmit(event) {
         phone: document.getElementById('phone').value
     };
 
-    // Here you would typically send the data to your server
-    console.log('Form submitted:', formData);
-    
-    // Show success message
-    alert('Thank you for registering! We will contact you soon.');
-    
-    // Reset form
-    event.target.reset();
+    // Replace this URL with the one you copied
+    fetch('https://script.google.com/macros/s/AKfycbwNTkYQ58e5xJ-lIOguAafabT_kfiFL-vmZpP_O9i9iZpR_aa6mfvsDb9C-OaQ5VMoc/exec', {
+        method: 'POST',
+        body: JSON.stringify(formData),
+        mode: 'no-cors'
+    })
+    .then(() => {
+        alert('Thank you for registering! We will contact you soon.');
+        document.getElementById('registrationForm').reset();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('There was an error submitting the form. Please try again.');
+    });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
