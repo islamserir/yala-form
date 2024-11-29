@@ -15,7 +15,7 @@ function handleSubmit(event) {
         mode: 'no-cors'
     })
     .then(() => {
-        alert('Thank you for registering! We will contact you soon.');
+        showSuccessMessage('Thank you for registering! We will contact you soon.');
         document.getElementById('registrationForm').reset();
     })
     .catch(error => {
@@ -30,17 +30,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Remove existing airplanes
     decoration.innerHTML = '';
     
-    // Create 100 airplanes
-    for (let i = 0; i < 100; i++) {
+    // Create 50 airplanes (reduced from 100 for better performance)
+    for (let i = 0; i < 50; i++) {
         const airplane = document.createElement('div');
         airplane.className = 'airplane';
         
         // Set random custom properties
-        airplane.style.setProperty('--i', Math.random() * 100);
+        airplane.style.setProperty('--i', Math.random() * 50);
         airplane.style.setProperty('--y', Math.random() * 100);
-        airplane.style.setProperty('--size', Math.random());
-        airplane.style.setProperty('--rotate', `${Math.random() * 360}deg`);
-        airplane.style.setProperty('--shift', `${(Math.random() - 0.5) * 200}px`);
+        airplane.style.setProperty('--rotate', `${Math.random() * 45 - 22.5}deg`); // Limit rotation angle
         
         decoration.appendChild(airplane);
     }
@@ -75,4 +73,34 @@ function showTab(tabId) {
         void img.offsetWidth;
         img.classList.add('loaded');
     });
+}
+
+function showSuccessMessage(message) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'success-message';
+    messageDiv.textContent = message;
+    document.body.appendChild(messageDiv);
+
+    setTimeout(() => {
+        messageDiv.style.transform = 'translateX(200%)';
+        setTimeout(() => messageDiv.remove(), 500);
+    }, 3000);
+}
+
+function addCountdownTimer() {
+    const eventDate = new Date('December 1, 2024 08:00:00').getTime();
+    const timerDiv = document.createElement('div');
+    timerDiv.className = 'countdown-timer';
+    
+    setInterval(() => {
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+        
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        
+        timerDiv.innerHTML = `Event starts in: ${days}d ${hours}h`;
+    }, 1000);
+    
+    document.querySelector('.event-details').prepend(timerDiv);
 } 
