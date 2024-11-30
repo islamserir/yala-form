@@ -1,33 +1,44 @@
-function doGet() {
-  return ContentService.createTextOutput('The web app is running correctly.');
+function doGet(e) {
+  return ContentService
+    .createTextOutput(JSON.stringify({ 'result': 'success', 'data': 'Get request received' }))
+    .setMimeType(ContentService.MimeType.JSON);
 }
 
 function doPost(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  const data = JSON.parse(e.postData.contents);
-  
-  sheet.appendRow([
-    new Date(),
-    data.firstName,
-    data.lastName,
-    data.email,
-    data.phone
-  ]);
-  
-  sendEmailNotification(data);
-  
-  return ContentService.createTextOutput(JSON.stringify({
-    'result': 'success',
-    'row': sheet.getLastRow()
-  })).setMimeType(ContentService.MimeType.JSON);
-}
-
-function sendEmailNotification(data) {
-  MailApp.sendEmail({
-    to: "your.actual@email.com",
-    subject: "New YALA Registration Form Submission",
-    body: `New registration from ${data.firstName} ${data.lastName}\n
-           Email: ${data.email}\n
-           Phone: ${data.phone}`
-  });
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    const data = JSON.parse(e.parameter.data);
+    
+    // Get timestamp
+    const timestamp = new Date();
+    
+    // Prepare row data
+    const rowData = [
+      timestamp,
+      data.firstName,
+      data.lastName,
+      data.phone,
+      data.major,
+      data.address,
+      data.birthdate,
+      data.phobiaType,
+      data.severity,
+      data.phobiaStart,
+      data.dailyEffect,
+      data.lunch,
+      data.timesuit
+    ];
+    
+    // Append row to sheet
+    sheet.appendRow(rowData);
+    
+    return ContentService
+      .createTextOutput(JSON.stringify({ 'result': 'success', 'data': rowData }))
+      .setMimeType(ContentService.MimeType.JSON);
+      
+  } catch (error) {
+    return ContentService
+      .createTextOutput(JSON.stringify({ 'result': 'error', 'error': error.toString() }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 } 
