@@ -1,11 +1,14 @@
 :root {
-    --primary-color: #00ff00;
-    --secondary-color: #32cd32;
-    --background-color: #000000;
-    --text-color: #ffffff;
-    --glass-bg: rgba(0, 0, 0, 0.5);
+    --dark-primary: #0a192f;    /* Deep navy */
+    --dark-secondary: #1a1a2e;  /* Dark blue */
+    --accent-dark: #ff1744;     /* Deep red */
+    --accent-light: #ffd700;    /* Golden yellow */
+    --light-primary: #ffffff;   /* Pure white */
+    --light-secondary: #87ceeb; /* Sky blue */
+    --glass-bg: rgba(10, 25, 47, 0.8);
     --glass-border: rgba(255, 255, 255, 0.1);
-    --glass-shadow: rgba(0, 255, 0, 0.1);
+    --text-dark: #0a192f;
+    --text-light: #ffffff;
 }
 
 * {
@@ -16,21 +19,23 @@
 
 body {
     font-family: 'Google Sans', 'Segoe UI', Roboto, Arial, sans-serif;
-    background: linear-gradient(135deg, #000000, #1a1a1a, #000000);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
+    background: linear-gradient(
+        to bottom,
+        var(--dark-primary) 0%,
+        var(--dark-secondary) 30%,
+        var(--light-secondary) 70%,
+        var(--light-primary) 100%
+    );
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     perspective: 1000px;
-    color: var(--text-color);
-}
-
-@keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    color: var(--text-light);
+    background-attachment: fixed;
+    background-size: 100% 400%;
+    background-position: top;
+    transition: background-position 0.3s ease;
 }
 
 .container {
@@ -42,15 +47,181 @@ body {
 }
 
 form {
-    background: var(--glass-bg);
+    background: linear-gradient(135deg,
+        var(--glass-bg) 0%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
     backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
     border-radius: 24px;
     padding: 40px;
-    box-shadow: 0 8px 32px var(--glass-shadow);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Journey line effect */
+form::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom,
+        var(--accent-dark) 0%,
+        var(--accent-light) 100%
+    );
+}
+
+h1 {
+    background: linear-gradient(45deg,
+        var(--accent-dark) 0%,
+        var(--accent-light) 100%
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 2.5em;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.input-group input,
+.input-group textarea,
+.input-group select {
+    background: linear-gradient(135deg,
+        rgba(10, 25, 47, 0.8) 0%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    border: 1px solid var(--glass-border);
+    color: var(--text-light);
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus,
+.input-group textarea:focus,
+.input-group select:focus {
+    border-color: var(--accent-light);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+}
+
+button {
+    background: linear-gradient(45deg,
+        var(--accent-dark) 0%,
+        var(--accent-light) 100%
+    );
+    border: none;
+    color: var(--text-light);
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-weight: bold;
+    transition: all 0.3s ease;
     transform-style: preserve-3d;
-    animation: formFloat 6s ease-in-out infinite;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Section dividers */
+.section-divider {
+    height: 3px;
+    background: linear-gradient(90deg,
+        var(--accent-dark) 0%,
+        var(--accent-light) 100%
+    );
+    margin: 30px 0;
+    position: relative;
+    border-radius: 3px;
+}
+
+.section-divider::before {
+    content: '✦';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--dark-primary);
+    padding: 0 15px;
+    color: var(--accent-light);
+}
+
+/* Event details section */
+.event-details {
+    background: linear-gradient(135deg,
+        var(--glass-bg) 0%,
+        rgba(255, 255, 255, 0.1) 100%
+    );
+    border-radius: 24px;
+    padding: 40px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Fear to hope illustration */
+.event-details::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(
+        circle at center,
+        var(--accent-light) 0%,
+        transparent 70%
+    );
+    opacity: 0.1;
+    animation: hopeLight 4s ease-in-out infinite;
+}
+
+@keyframes hopeLight {
+    0%, 100% { transform: scale(1); opacity: 0.1; }
+    50% { transform: scale(1.2); opacity: 0.2; }
+}
+
+/* Floating icons with light trail effect */
+.icon {
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: grayscale(0.7) brightness(1.2);
+    opacity: 0.4;
+    z-index: 0;
+    will-change: transform;
+    transition: all 0.3s ease;
+}
+
+.icon:hover {
+    filter: grayscale(0) brightness(1.5);
+    opacity: 0.8;
+}
+
+/* Radio buttons with gradient */
+.radio-group input[type="radio"] {
+    border: 2px solid var(--accent-light);
+}
+
+.radio-group input[type="radio"]:checked {
+    background: linear-gradient(45deg,
+        var(--accent-dark) 0%,
+        var(--accent-light) 100%
+    );
+}
+
+/* Success message with hope theme */
+.success-message {
+    background: linear-gradient(45deg,
+        var(--accent-light) 0%,
+        var(--light-secondary) 100%
+    );
+    color: var(--text-dark);
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
 }
 
 .logo-container {
@@ -61,27 +232,6 @@ form {
 .logo {
     max-width: 180px;
     height: auto;
-    filter: drop-shadow(0 4px 8px var(--shadow-color));
-    transition: transform 0.3s ease;
-    background-image: url('img1.png');
-}
-
-.logo:hover {
-    transform: scale(1.05);
-}
-
-h1 {
-    font-size: 32px;
-    color: var(--primary-color);
-    margin-bottom: 20px;
-    text-align: center;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: nowrap;
-    padding: 10px;
 }
 
 .header-icon {
@@ -126,12 +276,20 @@ h2 {
 .input-group select {
     width: 100%;
     padding: 12px 16px;
-    border: 2px solid var(--glass-border);
+    border: 2px solid rgba(255, 107, 0, 0.1);
     border-radius: 12px;
-    background: transparent;
+    background: rgba(0, 0, 0, 0.3);
     color: var(--text-color);
     font-size: 16px;
     transition: all 0.3s ease;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.input-group input:focus,
+.input-group textarea:focus,
+.input-group select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px var(--shadow-accent);
 }
 
 .input-group label {
@@ -155,24 +313,23 @@ h2 {
 }
 
 button {
-    width: 100%;
-    padding: 16px;
-    background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-    color: white;
+    background: linear-gradient(45deg, #000000, var(--primary-color));
     border: none;
     border-radius: 12px;
+    color: white;
+    padding: 16px;
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 0 20px rgba(255, 107, 0, 0.2);
 }
 
 button:hover {
-    background: var(--secondary-color);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+    box-shadow: 0 0 30px var(--shadow-accent);
 }
 
 button:active {
@@ -251,44 +408,19 @@ button:hover::before {
     }
 }
 
-/* Success message animation */
-.success-message {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 16px 24px;
-    background: rgba(255, 105, 180, 0.9);
-    color: white;
-    border-radius: 12px;
-    transform: translateX(200%);
-    animation: slideIn 0.5s forwards;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-@keyframes slideIn {
-    to { transform: translateX(0); }
-}
-
-.event-details {
-    background: var(--glass-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--glass-border);
-    border-radius: 24px;
-    padding: 40px;
-    box-shadow: 0 8px 32px var(--glass-shadow);
-    margin-bottom: 30px;
-}
-
-.event-details::before {
+.event-details::after {
     content: '';
     position: absolute;
-    top: -10px;
-    left: 20px;
-    right: 20px;
-    height: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px 10px 0 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        transparent 0%,
+        rgba(255, 107, 0, 0.05) 50%,
+        transparent 100%
+    );
+    pointer-events: none;
 }
 
 .event-info {
@@ -356,8 +488,27 @@ button:hover::before {
 
 .section-divider {
     height: 2px;
-    background: linear-gradient(to right, transparent, var(--primary-color), transparent);
-    margin: 20px 0;
+    background: linear-gradient(90deg,
+        transparent,
+        var(--primary-color),
+        transparent
+    );
+    margin: 30px 0;
+    position: relative;
+    opacity: 0.5;
+}
+
+.section-divider::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 15px var(--primary-color);
 }
 
 /* Responsive adjustments */
@@ -445,17 +596,6 @@ button:hover::before {
     transform: translateZ(0);
 }
 
-.icon {
-    position: absolute;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    filter: brightness(1.5);
-    z-index: 0;
-    will-change: transform;
-    background-image: url('img2.png');
-}
-
 @keyframes floatAcross {
     0% {
         transform: translateX(-100px) rotate(0deg) scale(0.8);
@@ -538,36 +678,62 @@ html[lang="ar"] form {
     align-items: center;
     gap: 20px;
     margin-top: 10px;
-    justify-content: flex-end; /* Default alignment for English */
+    flex-wrap: wrap; /* Allow wrapping on mobile */
 }
 
-/* Radio group alignment for Arabic */
-html[lang="ar"] .radio-group {
-    justify-content: flex-start;
-    flex-direction: row-reverse;
+/* Container for radio options */
+.radio-option {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    min-width: 80px; /* Minimum width for each option */
 }
 
 /* Update radio button spacing */
 .radio-group input[type="radio"] {
-    margin: 0 8px; /* Equal spacing on both sides */
+    margin: 0 8px;
+    flex-shrink: 0; /* Prevent radio button from shrinking */
 }
 
 /* Label positioning */
 .radio-group label {
-    cursor: pointer;
+    white-space: nowrap; /* Prevent label text from wrapping */
     position: relative;
     padding: 0 5px;
-    vertical-align: middle;
 }
 
-/* Specific adjustments for English */
-html[lang="en"] .radio-group {
-    padding-right: 20px; /* Add some padding on the right for English */
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+    .input-group {
+        margin-bottom: 30px; /* Increase spacing between groups */
+    }
+
+    .radio-group {
+        margin-top: 25px; /* Add space between question and options */
+        justify-content: flex-start;
+        gap: 15px;
+    }
+
+    /* Question label for radio groups */
+    .input-group > label:not(.radio-group label) {
+        display: block;
+        position: relative;
+        margin-bottom: 10px;
+        transform: none;
+        left: 0;
+        top: 0;
+    }
 }
 
-/* Specific adjustments for Arabic */
+/* RTL support for mobile */
 html[lang="ar"] .radio-group {
-    padding-left: 20px; /* Add some padding on the left for Arabic */
+    justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+    html[lang="ar"] .radio-group {
+        justify-content: flex-start;
+    }
 }
 
 textarea {
@@ -777,4 +943,213 @@ html[lang="ar"] .lang-en {
 
 html[lang="ar"] .lang-ar {
     display: block;
+}
+
+/* Add these styles for the severity slider */
+.severity-container {
+    position: relative;
+    padding: 20px 10px;
+    margin: 20px 0;
+}
+
+.severity-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background: linear-gradient(to right,
+        var(--accent-dark) 0%,
+        var(--accent-light) 100%
+    );
+    outline: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.severity-slider:hover {
+    opacity: 1;
+}
+
+.severity-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: var(--light-primary);
+    cursor: pointer;
+    border: 3px solid var(--accent-light);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+.severity-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 15px var(--accent-light);
+}
+
+.severity-slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: var(--light-primary);
+    cursor: pointer;
+    border: 3px solid var(--accent-light);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    transition: all 0.3s ease;
+}
+
+#severityValue {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(45deg,
+        var(--accent-dark) 0%,
+        var(--accent-light) 100%
+    );
+    padding: 5px 15px;
+    border-radius: 15px;
+    color: var(--light-primary);
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+/* Severity markers */
+.severity-markers {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding: 0 10px;
+}
+
+.severity-marker {
+    font-size: 12px;
+    color: var(--text-light);
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.severity-marker.active {
+    color: var(--accent-light);
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Add this to styles.css */
+.progress-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, 
+        var(--accent-dark) 0%,
+        var(--accent-light) 100%
+    );
+    width: 0;
+    transition: width 0.3s ease;
+}
+
+.form-section {
+    border-left: 3px solid var(--accent-light);
+    padding-left: 20px;
+    margin-bottom: 30px;
+    opacity: 0.7;
+    transition: all 0.3s ease;
+}
+
+.form-section.active {
+    opacity: 1;
+    border-left-width: 5px;
+}
+
+.form-section-title {
+    color: var(--accent-light);
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.input-group.valid input {
+    border-color: #4CAF50;
+}
+
+.input-group.invalid input {
+    border-color: var(--accent-dark);
+}
+
+.validation-message {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    font-size: 12px;
+    color: var(--accent-dark);
+    opacity: 0.7;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.input-group.invalid .validation-message {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.save-draft {
+    background: transparent;
+    border: 2px solid var(--accent-light);
+    color: var(--accent-light);
+    margin-right: 10px;
+}
+
+.save-draft:hover {
+    background: var(--accent-light);
+    color: var(--dark-primary);
+}
+
+.tooltip {
+    position: absolute;
+    right: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--dark-primary);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    z-index: 10;
+}
+
+.input-group:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+    right: -5px;
+}
+
+.char-counter {
+    position: absolute;
+    bottom: -20px;
+    right: 0;
+    font-size: 12px;
+    color: var(--accent-light);
+    opacity: 0.7;
+}
+
+.char-counter.limit-near {
+    color: #FFA500;
+}
+
+.char-counter.limit-reached {
+    color: var(--accent-dark);
 } 

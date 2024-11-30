@@ -17,7 +17,7 @@
 
     <div class="container">
         <div class="logo-container">
-            <img src="img1.png" alt="YALA Logo" class="logo">
+            <img src="yallalogo.png" alt="YALA Logo" class="logo">
         </div>
 
         <div class="event-details">
@@ -28,8 +28,8 @@
                 <h3 class="lang-en">Event Details</h3>
                 <h3 class="lang-ar">تفاصيل الحدث</h3>
                 
-                <p class="lang-en"><strong>Date:</strong> December 1</p>
-                <p class="lang-ar"><strong>التاريخ:</strong> 1 ديسمبر</p>
+                <p class="lang-en"><strong>Date:</strong> December </p>
+                <p class="lang-ar"><strong>التاريخ:</strong>  ديسمبر</p>
                 
                 <p class="lang-en"><strong>Location:</strong> Ben Balat Garden</p>
                 <p class="lang-ar"><strong>الموقع:</strong> حديقة بن بلاط</p>
@@ -159,8 +159,28 @@
             <div class="input-group">
                 <label class="lang-en">Severity (1-10)</label>
                 <label class="lang-ar">شدة الخوف (1-10)</label>
-                <input type="range" id="severity" min="1" max="10" required>
-                <span id="severityValue">5</span>
+                <div class="severity-container">
+                    <span id="severityValue">5</span>
+                    <input type="range" 
+                           id="severity" 
+                           class="severity-slider"
+                           min="1" 
+                           max="10" 
+                           value="5" 
+                           required>
+                    <div class="severity-markers">
+                        <span class="severity-marker">1</span>
+                        <span class="severity-marker">2</span>
+                        <span class="severity-marker">3</span>
+                        <span class="severity-marker">4</span>
+                        <span class="severity-marker">5</span>
+                        <span class="severity-marker">6</span>
+                        <span class="severity-marker">7</span>
+                        <span class="severity-marker">8</span>
+                        <span class="severity-marker">9</span>
+                        <span class="severity-marker">10</span>
+                    </div>
+                </div>
             </div>
 
             <div class="input-group">

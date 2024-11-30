@@ -235,7 +235,17 @@ function toggleLanguage() {
 
 // Update severity value display
 document.getElementById('severity').addEventListener('input', function(e) {
-    document.getElementById('severityValue').textContent = e.target.value;
+    const value = e.target.value;
+    document.getElementById('severityValue').textContent = value;
+    
+    // Update markers
+    document.querySelectorAll('.severity-marker').forEach((marker, index) => {
+        if (index + 1 <= value) {
+            marker.classList.add('active');
+        } else {
+            marker.classList.remove('active');
+        }
+    });
 });
 
 // Add this function to handle radio button selections
@@ -271,4 +281,18 @@ function loadIcon(iconPath) {
             reject(new Error(`Failed to load icon: ${iconPath}`));
         };
     });
-} 
+}
+
+document.addEventListener('scroll', function() {
+    const scrollPercent = (window.scrollY) / (document.documentElement.scrollHeight - window.innerHeight);
+    const body = document.body;
+    
+    // Update background position based on scroll
+    body.style.backgroundPosition = `0 ${scrollPercent * 100}%`;
+    
+    // Optional: Add fade effect to floating icons
+    const icons = document.querySelectorAll('.icon');
+    icons.forEach(icon => {
+        icon.style.opacity = Math.max(0.1, 0.4 - (scrollPercent * 0.3));
+    });
+}); 
